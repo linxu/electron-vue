@@ -12,6 +12,10 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
+      // 启用 Node.js 集成（允许渲染进程使用 Node API）
+      nodeIntegration: true,
+      // 启用上下文隔离
+      contextIsolation: false,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
