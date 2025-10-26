@@ -1,10 +1,32 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('node:path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
+
+const menuTemplate = [
+  {
+    label: '文件',
+    submenu: [
+      { label: '退出', accelerator: 'CmdOrCtrl+Q', click: () => {app.quit()} }
+    ]
+  },
+  {
+    label: '帮助',
+    submenu: [
+      // { label: '关于', click: () => app.showAboutPanel()},
+      { label: '关于', click: () => openAboutWindow()},
+      { type: 'separator' },
+      { label: '检查更新', click: () => {console.log('检查更新')} },
+    ]
+  }
+];
+
+const customMenu = Menu.buildFromTemplate(menuTemplate);
+// 应用到整个应用（所有窗口共享）
+Menu.setApplicationMenu(customMenu);
 
 const createWindow = () => {
   // Create the browser window.
@@ -19,18 +41,27 @@ const createWindow = () => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
-
+  mainWindow.setMenu(customMenu);
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  app.setAboutPanelOptions({
+    applicationName: "Electron Vue", // 应用名称
+    applicationVersion: "v1.0.0", // 应用版本
+    copyright: "© 2025 linxu.com", // 版权信息
+    iconPath: path.join(__dirname, 'assets', 'icons', 'pig@64.png'), // 应用图标
+    version: "", // 覆盖默认的 Electron 版本显示
+    authors: ["linxu"],
+    website: "http://www.linxu.com"
+  });
   createWindow();
 
   // On OS X it's common to re-create a window in the app when the
@@ -53,3 +84,17 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+function openAboutWindow() {
+  // __dirname（指向主进程文件在asar的目录:.webpack/main）
+  // app.getAppPath()（指向asar根目录）
+  const aboutPath = path.join(__dirname, 'html', 'about.html');
+  const aboutWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    title: "关于",
+    resizable: false,
+    // webPreferences: { contextIsolation: false, nodeIntegration: true }
+  });
+  // aboutWindow.webContents.openDevTools();
+  aboutWindow.loadFile(aboutPath);
+}

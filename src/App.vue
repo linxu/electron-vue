@@ -32,6 +32,9 @@ export default {
     AppTabs,
   },
   data() {
+    return {
+      
+    }
   },
   created() {
   },
