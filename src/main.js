@@ -33,6 +33,9 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    // 去掉边框和标题栏
+    // frame: false, 
+    // titleBarStyle: 'hidden',
     webPreferences: {
       // 启用 Node.js 集成（允许渲染进程使用 Node API）
       nodeIntegration: true,
