@@ -39,6 +39,7 @@
     "vue-template-compiler": "^2.7.16"
   },
   "dependencies": {
+    "axios": "^1.12.2",
     "electron-squirrel-startup": "^1.0.1",
     "element-ui": "^2.15.14",
     "lodash-es": "^4.17.21",
