@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -38,9 +38,9 @@ const createWindow = () => {
     // titleBarStyle: 'hidden',
     webPreferences: {
       // 启用 Node.js 集成（允许渲染进程使用 Node API）
-      nodeIntegration: true,
+      nodeIntegration: false,
       // 启用上下文隔离
-      contextIsolation: false,
+      contextIsolation: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
@@ -101,3 +101,23 @@ function openAboutWindow() {
   // aboutWindow.webContents.openDevTools();
   aboutWindow.loadFile(aboutPath);
 }
+
+// 共享数据（主进程全局变量）
+let appState = {
+  version: 1,
+};
+
+// 监听渲染进程的数据请求
+ipcMain.handle('app-state-load', () => {
+  return appState; // 返回当前共享数据
+});
+
+// 监听渲染进程的数据更新
+ipcMain.on('app-state-update', (event, newData) => {
+  // 更新主进程数据
+  let state = { ...appState, ...newData };
+  // 广播给所有渲染进程（关键：同步多窗口）
+  BrowserWindow.getAllWindows().forEach(window => {
+    window.webContents.send('app-state-updated', state);
+  });
+});

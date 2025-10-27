@@ -17,6 +17,10 @@ export default {
     setTimeout(() => {
       console.log(this.$store.state.base.appInfo);
     }, 3000);
+    window.electronStore.getState().then(state => {
+      console.log('共享数据：', state);
+    });
+    localStorage.setItem('app', 'electron vue');
   },
   computed: {
     ...mapGetters(['appInfo'])

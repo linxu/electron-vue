@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: process.env.BASE_URL || '/',
+    baseURL: '/',
     headers: {
         'Content-Type': 'application/json;charset=utf-8' // 默认请求头
     }
