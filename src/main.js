@@ -26,7 +26,7 @@ const menuTemplate = [
 
 const customMenu = Menu.buildFromTemplate(menuTemplate);
 // 应用到整个应用（所有窗口共享）
-Menu.setApplicationMenu(customMenu);
+// Menu.setApplicationMenu(customMenu);
 
 const createWindow = () => {
   // Create the browser window.
@@ -99,6 +99,7 @@ function openAboutWindow() {
     // webPreferences: { contextIsolation: false, nodeIntegration: true }
   });
   // aboutWindow.webContents.openDevTools();
+  aboutWindow.setMenu(Menu.buildFromTemplate([])); // 空菜单
   aboutWindow.loadFile(aboutPath);
 }
 
