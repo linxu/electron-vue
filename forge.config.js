@@ -6,9 +6,11 @@ module.exports = {
   packagerConfig: {
     asar: true,
     // MAC图标
-    icon: './src/assets/icons/app.icns',
+    // icon: './src/assets/icons/app.icns',
+    // WIN图标
+    // icon: 'D:\\linxu\\github\\electron-vue\\src\\assets\\icons\\app.ico',
     // 多平台图标（Windows: app.ico Linux: app.png Mac: app.icns）
-    // icon: path.join(__dirname, 'icons', 'app')
+    icon: path.join(__dirname, 'src', 'assets', 'icons', 'app')
   },
   rebuildConfig: {},
   publishers: [
@@ -29,11 +31,17 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         // 2. 安装包图标的 URL（本地路径需用 `file://` 协议）
-        iconUrl: `file://${path.join(__dirname, 'icons', 'app.ico')}`,
+        // iconUrl: `file://${path.join(__dirname, 'icons', 'app.ico')}`,
         // 3. 安装程序（setup.exe）的图标
-        setupIcon: path.join(__dirname, 'icons', 'app.ico'),
+        // setupIcon: path.join(__dirname, 'src/assets/icons/app.ico'),
+        // setupIcon: './src/assets/icons/app.ico',
+        // setupIcon: 'D:\\linxu\\github\\electron-vue\\src\\assets\\icons\\app.ico',
         // 4. 可选：卸载程序的图标（默认与 setupIcon 一致）
         // uninstallIcon: path.join(__dirname, 'icons', 'uninstall.ico'),
+        // 可选：安装过程中显示的加载动画（.gif 格式，无需求可省略）
+        // loadingGif: path.join(__dirname, 'assets/loading.gif'),
+        // 可选：开始菜单快捷方式的名称（默认使用 package.json 中的 name）
+        name: 'Electron.Vue',
       },
     },
     {
