@@ -33,7 +33,7 @@ module.exports = {
         // 2. 安装包图标的 URL（本地路径需用 `file://` 协议）
         // iconUrl: `file://${path.join(__dirname, 'icons', 'app.ico')}`,
         // 3. 安装程序（setup.exe）的图标
-        // setupIcon: path.join(__dirname, 'src/assets/icons/app.ico'),
+        setupIcon: path.join(__dirname, 'src/assets/icons/app.ico'),
         // setupIcon: './src/assets/icons/app.ico',
         // setupIcon: 'D:\\linxu\\github\\electron-vue\\src\\assets\\icons\\app.ico',
         // 4. 可选：卸载程序的图标（默认与 setupIcon 一致）
