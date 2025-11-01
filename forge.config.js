@@ -14,15 +14,25 @@ module.exports = {
   },
   rebuildConfig: {},
   publishers: [
+    // {
+    //   name: '@electron-forge/publisher-github',
+    //   config: {
+    //     repository: {
+    //       owner: 'linxu',
+    //       name: 'electron-vue'
+    //     },
+    //     prerelease: false,
+    //     draft: false,
+    //   }
+    // },
     {
-      name: '@electron-forge/publisher-github',
+      name: '@electron-forge/publisher-electron-release-server',
       config: {
-        repository: {
-          owner: 'linxu',
-          name: 'electron-vue'
-        },
-        prerelease: false,
-        draft: false,
+        baseUrl: 'http://127.0.0.1:8080',
+        username: 'username',
+        password: process.env.PASSWORD,// string
+        // channel: 'stable',
+        // flavor: 'test',
       }
     }
   ],

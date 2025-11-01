@@ -1,0 +1,5 @@
+# 手动创建 app-update.yml，内容与 autoUpdater 配置一致
+provider: generic
+url: http://127.0.0.1:8080/
+channel: latest
+version: 1.0.0 # 与应用版本一致（package.json 中的 version）

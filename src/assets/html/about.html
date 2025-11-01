@@ -33,11 +33,14 @@
     <div class="flex-container">
         <img src="../icons/app.png" />
         <div class="app-name">Electron Vue</div>
-        <div class="app-version">v1.0.0</div>
+        <div class="app-version"></div>
         <div class="app-copyright">© 2025 linxu.com</div>
     </div>
   </body>
   <script>
+    window.electronStore.getState().then(state => {
+      document.querySelector('.app-version').textContent = 'v' + state.version;
+    });
     console.log(localStorage.getItem('app'));
   </script>
 </html>

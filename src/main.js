@@ -2,6 +2,8 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
 const updateManager = require('./update'); 
 
+updateManager.initUpdateConfig();
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -20,7 +22,9 @@ const menuTemplate = [
       // { label: '关于', click: () => app.showAboutPanel()},
       { label: '关于', click: () => openAboutWindow()},
       { type: 'separator' },
-      { label: '检查更新', click: () => {console.log('检查更新')} },
+      { label: '检查更新', click: () => {
+        updateManager.checkForUpdates();
+      } },
     ]
   }
 ];
@@ -57,7 +61,6 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  updateManager.checkForUpdates();
   app.setAboutPanelOptions({
     applicationName: "Electron Vue", // 应用名称
     applicationVersion: "v1.0.0", // 应用版本
@@ -98,7 +101,11 @@ function openAboutWindow() {
     height: 200,
     title: "关于",
     resizable: false,
-    // webPreferences: { contextIsolation: false, nodeIntegration: true }
+    webPreferences: { 
+      contextIsolation: true, 
+      nodeIntegration: false,
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+    }
   });
   // aboutWindow.webContents.openDevTools();
   aboutWindow.setMenu(Menu.buildFromTemplate([])); // 空菜单
@@ -107,7 +114,7 @@ function openAboutWindow() {
 
 // 共享数据（主进程全局变量）
 let appState = {
-  version: 1,
+  version: app.getVersion(),
 };
 
 // 监听渲染进程的数据请求
