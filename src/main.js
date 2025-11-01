@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
+const updateManager = require('./update'); 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -26,7 +27,7 @@ const menuTemplate = [
 
 const customMenu = Menu.buildFromTemplate(menuTemplate);
 // 应用到整个应用（所有窗口共享）
-// Menu.setApplicationMenu(customMenu);
+Menu.setApplicationMenu(customMenu);
 
 const createWindow = () => {
   // Create the browser window.
@@ -56,6 +57,7 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  updateManager.checkForUpdates();
   app.setAboutPanelOptions({
     applicationName: "Electron Vue", // 应用名称
     applicationVersion: "v1.0.0", // 应用版本
