@@ -31,10 +31,10 @@ module.exports = {
         baseUrl: 'http://127.0.0.1:8080',
         username: 'username',
         password: process.env.PASSWORD,// string
-        // channel: 'stable',
-        // flavor: 'test',
+        channel: 'stable',
+        flavor: 'default',
       }
-    }
+    },
   ],
   makers: [
     {

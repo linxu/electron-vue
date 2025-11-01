@@ -5,7 +5,7 @@ var os = require('os');
 class UpdateManager {
   constructor() {
     // this.initUpdateConfig();
-    // this.bindUpdateEvents();
+    this.bindUpdateEvents();
   }
 
   // 初始化更新配置（设置更新源）
@@ -17,17 +17,17 @@ class UpdateManager {
     //   repo: 'electron-vue',
     //   releaseType: 'release', // 正式版，如需预发布版设为 'prerelease'
     // });
-    var url = 'http://127.0.0.1:8080/update/';
-    if (os.platform() === 'darwin') {
-      url += 'osx_' + os.arch()
-    } else {
-      url += os.platform() + '_' + os.arch()
-    }
-    autoUpdater.setFeedURL({
-      provider: 'generic',
-      url: url
-    });
-    this.bindUpdateEvents();
+    // var url = 'http://127.0.0.1:8080/update/';
+    // if (os.platform() === 'darwin') {
+    //   url += 'osx_' + os.arch()
+    // } else {
+    //   url += os.platform() + '_' + os.arch()
+    // }
+    // autoUpdater.setFeedURL({
+    //   provider: 'generic',
+    //   url: url
+    // });
+    // this.bindUpdateEvents();
   }
 
   // 绑定更新相关事件

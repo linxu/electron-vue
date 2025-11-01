@@ -1,8 +1,19 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
+const { autoUpdater } = require('electron-updater');
+var os = require('os');
 const updateManager = require('./update'); 
 
-updateManager.initUpdateConfig();
+var url = 'http://127.0.0.1:8080/update/';
+if (os.platform() === 'darwin') {
+  url += 'osx_' + os.arch()
+} else {
+  url += os.platform() + '_' + os.arch()
+}
+autoUpdater.setFeedURL({
+  provider: 'generic',
+  url: url
+});
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
